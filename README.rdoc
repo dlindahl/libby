@@ -1,6 +1,28 @@
-= libby
+= Libby
 
-Description goes here.
+Libby provides an easy way to include the most popular Javascript Libraries in your layouts or views.
+
+== Installing
+
+  gem install libby
+
+== Using Libby
+
+=== Setup
+
+Tell Libby where you libraries are
+
+Create an initializer in config/initializers/libby.rb
+
+  Libby.root = Rails.root + "/public/javascripts"
+
+=== Usage
+
+  include_jquery
+
+  include_ext_js
+
+  include_jquery_ui
 
 == Note on Patches/Pull Requests
  

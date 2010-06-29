@@ -1,16 +1,17 @@
-require 'rubygems'
 require 'rake'
 
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "libby"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.summary = %Q{Libby provides an easy way to include the most popular Javascript Libraries in your layouts or views.}
+    gem.description = %Q{Libby provides an easy way to include the most popular Javascript Libraries in your layouts or views.}
     gem.email = "dlindahl@customink.com"
     gem.homepage = "http://github.com/dlindahl/libby"
     gem.authors = ["Derek Lindahl"]
-    gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
+    gem.add_dependency "activesupport"
+    gem.add_dependency "versionomy", ">= 0.4.0"
+    gem.add_development_dependency "shoulda"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
