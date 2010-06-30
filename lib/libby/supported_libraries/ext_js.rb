@@ -4,7 +4,7 @@ class Libby::ExtJs < Libby::JavascriptLibrary
   include Libby::Mixins::MinifiableLibrary
 
   NAME = 'ExtJS'.freeze
-  MAX_VERSION = Versionomy.parse('3.0-rc2').freeze
+  MAX_VERSION = Versionomy.parse('3.2.1').freeze
   BASE_PATH = 'extjs'.freeze
   MINIFIED_SUFFIX = 'min'.freeze
   DEFAULT_CORE_CLASS = 'ExtJs::Cores::ExtJsCore'.freeze
