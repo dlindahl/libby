@@ -10,14 +10,14 @@ Libby provides an easy way to include the most popular Javascript Libraries in y
 
 === Setup
 
-By default, Libby will look in +public/javascripts+ for your the installed Javascript Libraries. If you wish to change the default path, put the following in an
-initializer in +config/initializers/libby.rb+:
+By default, Libby will look in [public/javascripts] for your installed Javascript Libraries. If you wish to change the default path, put the following in an
+initializer in [config/initializers/libby.rb]:
 
   Libby.root = Rails.root + "/public/javascripts"
 
 === Usage
 
-Including a Javascript Library in your views or layouts can be as simple as the following commands:
+Including a Libby supported Javascript Library in your views or layouts can be as simple as the following commands:
 
   <%= include_ext_js %>
 
