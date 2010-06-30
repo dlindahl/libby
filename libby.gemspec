@@ -36,6 +36,7 @@ Gem::Specification.new do |s|
      "lib/libby/supported_libraries/ext_js.rb",
      "lib/libby/supported_libraries/jquery.rb",
      "lib/libby/supported_libraries/jquery_ui.rb",
+     "lib/tasks/libby.rake",
      "libby.gemspec",
      "test/helper.rb",
      "test/shoulda_macros/libby_macros.rb",
