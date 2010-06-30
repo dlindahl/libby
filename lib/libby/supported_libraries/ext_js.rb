@@ -73,6 +73,21 @@ class Libby::ExtJs < Libby::JavascriptLibrary
   def include
     [include_core, include_adapter, include_components].flatten
   end
+
+  def self.download_params
+    lib_name = NAME.downcase
+    version = MAX_VERSION.to_s
+
+    url = "http://extjs.cachefly.net/"
+
+    {
+      :name => lib_name,
+      :version => version,
+      :files => [ "#{url}/ext-#{version}.zip" ],
+      :save_path => "#{Libby.root}/#{lib_name}"
+    }
+  end
+
 end
 
 module Libby::ExtJs::Cores

@@ -2,6 +2,10 @@ module Libby
   class <<self
     # This allows users to tell Libby where their Javascript Libraries are located on the local filesystem
     attr_accessor :root
+
+    def root
+      @root || 'public/javascripts'
+    end
   end
 
   module Mixins

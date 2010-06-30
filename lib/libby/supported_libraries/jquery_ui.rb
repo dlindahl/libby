@@ -3,13 +3,13 @@ class Libby::JqueryUi < Libby::Jquery
   include Libby::Mixins::LibraryWithComponents
   include Libby::Mixins::MinifiableLibrary
 
-  NAME = 'jQuery UI'
+  NAME = 'jQuery UI'.freeze
   MAX_VERSION = Versionomy.parse('1.8rc3').freeze
-  BASE_PATH = 'jquery/ui'
-  DEFAULT_CORE_CLASS = 'Jquery'
+  BASE_PATH = 'jquery/ui'.freeze
+  DEFAULT_CORE_CLASS = 'Jquery'.freeze
   CORE_VERSIONS = {
     '1.8rc3' => '1.4.2'
-  }
+  }.freeze
 
   minifiable true
 
@@ -48,6 +48,20 @@ class Libby::JqueryUi < Libby::Jquery
 
   def include
     [include_core, include_components].flatten
+  end
+
+  def self.download_params
+    lib_name = self.name.split('::').last.underscore.dasherize
+    version = MAX_VERSION.to_s
+
+    url = "http://jquery-ui.googlecode.com/files"
+
+    {
+      :name => lib_name,
+      :version => version,
+      :files => [ "#{url}/#{lib_name}-#{version}.zip" ],
+      :save_path => "#{Libby.root}/jquery/ui/#{version}"
+    }
   end
 
   private

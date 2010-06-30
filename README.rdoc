@@ -10,19 +10,70 @@ Libby provides an easy way to include the most popular Javascript Libraries in y
 
 === Setup
 
-Tell Libby where you libraries are
-
-Create an initializer in config/initializers/libby.rb
+By default, Libby will look in +public/javascripts+ for your the installed Javascript Libraries. If you wish to change the default path, put the following in an
+initializer in +config/initializers/libby.rb+:
 
   Libby.root = Rails.root + "/public/javascripts"
 
 === Usage
 
-  include_jquery
+Including a Javascript Library in your views or layouts can be as simple as the following commands:
 
-  include_ext_js
+  <%= include_ext_js %>
 
-  include_jquery_ui
+  <%= include_jquery %>
+
+  <%= include_jquery_ui %>
+
+Every library has a few common options that can be passed on include as well as a few library specific options.
+
+==== All Libraries
+
+===== Specific Versions
+
+TODO
+
+===== Minification
+
+TODO
+
+===== CDN
+
+TODO
+
+==== jQuery UI
+
+TODO
+
+===== Components
+
+TODO
+
+==== ExtJs
+
+===== Cores
+
+TODO
+
+===== Components
+
+TODO
+
+=== Installing Javascript Libraries
+
+Libby includes several Rake tasks that allow you to quickly download any of Libby's supported Javascript Libraries
+
+  rake libby:install:ext_js
+
+  rake libby:install:jquery
+
+  rake libby:install:jquery_ui
+
+Or, if you need everything:
+
+  rake libby:install:all
+
+These Rake tasks will download the libraries from their respective hosts and install them in a location that Libby expects them to live (which can be configured by changing Libby.root)
 
 == Note on Patches/Pull Requests
  
