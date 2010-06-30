@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{libby}
-  s.version = "0.0.0.pre2"
+  s.version = "0.0.1.pre1"
 
   s.required_rubygems_version = Gem::Requirement.new("> 1.3.1") if s.respond_to? :required_rubygems_version=
   s.authors = ["Derek Lindahl"]
@@ -36,6 +36,7 @@ Gem::Specification.new do |s|
      "lib/libby/supported_libraries/ext_js.rb",
      "lib/libby/supported_libraries/jquery.rb",
      "lib/libby/supported_libraries/jquery_ui.rb",
+     "lib/tasks/libby.rake",
      "libby.gemspec",
      "test/helper.rb",
      "test/shoulda_macros/libby_macros.rb",
