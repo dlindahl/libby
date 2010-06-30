@@ -12,8 +12,8 @@ NOTE: This is a super pre-release version and I make no guarantees as to how/if 
 
 === Setup
 
-By default, Libby will look in `public/javascripts` for your installed Javascript Libraries. If you wish to change the default path, put the following in an
-initializer in `config/initializers/libby.rb`:
+By default, Libby will look in public/javascripts for your installed Javascript Libraries. If you wish to change the default path, put the following in an
+initializer in config/initializers/libby.rb:
 
   Libby.root = Rails.root + "/public/javascripts"
 
