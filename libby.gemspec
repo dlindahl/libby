@@ -5,12 +5,12 @@
 
 Gem::Specification.new do |s|
   s.name = %q{libby}
-  s.version = "0.0.1.pre4"
+  s.version = "0.0.2"
 
-  s.required_rubygems_version = Gem::Requirement.new("> 1.3.1") if s.respond_to? :required_rubygems_version=
+  s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Derek Lindahl"]
   s.date = %q{2010-07-19}
-  s.description = %q{Libby provides an easy way to include the most popular Javascript Libraries in your layouts or views.}
+  s.description = %q{Libby provides an easy way to include the most popular Javascript Libraries in your layouts or views using just one line of code.}
   s.email = %q{dlindahl@customink.com}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -43,17 +43,15 @@ Gem::Specification.new do |s|
      "lib/tasks/libby.rb",
      "libby.gemspec",
      "test/helper.rb",
-     "test/shoulda_macros/libby_macros.rb",
      "test/test_libby.rb"
   ]
   s.homepage = %q{http://github.com/dlindahl/libby}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}
-  s.summary = %q{Libby provides an easy way to include the most popular Javascript Libraries in your layouts or views.}
+  s.summary = %q{Libby includes Javascript Libraries in your view in just one line.}
   s.test_files = [
     "test/helper.rb",
-     "test/shoulda_macros/libby_macros.rb",
      "test/test_libby.rb"
   ]
 
