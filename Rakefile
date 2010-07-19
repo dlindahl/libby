@@ -53,3 +53,6 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
+
+# Include the Libby Rake tasks for Gem development
+load File.dirname(__FILE__) + '/lib/tasks/libby.rake'

@@ -17,3 +17,5 @@ require File.dirname(__FILE__) +  '/libby/supported_libraries/jquery_ui'
 require File.dirname(__FILE__) +  '/libby/rails/libby_helper'
 
 ActionView::Base.send( :include, Libby::Rails::LibbyHelper ) if defined?(ActionView)
+
+require File.dirname(__FILE__) + '/libby/initializers'
