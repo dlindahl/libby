@@ -1,9 +1,15 @@
-require 'test/unit'
-require 'action_view'
+require 'rubygems'
 require 'shoulda'
+require 'redgreen'
 
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
-$LOAD_PATH.unshift(File.dirname(__FILE__))
+require 'test/unit'
+
+$:.unshift(File.dirname(__FILE__) + '/../lib')
+require File.dirname(__FILE__) + '/../init'
+
+# $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
+# $LOAD_PATH.unshift(File.dirname(__FILE__))
+
 require 'libby'
 
 unless defined?(Rails)

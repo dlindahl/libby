@@ -34,7 +34,6 @@ class TestLibby < Test::Unit::TestCase
               files_to_include = @lib.include
               assert_equal ["jquery/ui/#{@lib.version.to_s}/jquery-#{@core_version}.js"], files_to_include
             end
-            should_reference_files_that_exist "@lib.include"
             context "with specified" do
               context "components" do
                 setup do
@@ -48,7 +47,6 @@ class TestLibby < Test::Unit::TestCase
                   assert_equal "jquery/ui/#{@lib.version}/ui/minified/jquery.ui.widget.min.js", files_to_include[2]
                   assert_equal "jquery/ui/#{@lib.version}/ui/minified/jquery.ui.accordion.min.js", files_to_include[3]
                 end
-                should_reference_files_that_exist "@lib.include"
               end
               context "ALL components" do
                 setup do
@@ -60,7 +58,6 @@ class TestLibby < Test::Unit::TestCase
                   assert_equal "jquery/ui/#{@lib.version}/jquery-#{@core_version}.js", files_to_include[0]
                   assert_equal "jquery/ui/#{@lib.version}/ui/minified/jquery-ui.min.js", files_to_include[1]
                 end
-                should_reference_files_that_exist "@lib.include"
               end
               context "duplicate core" do
                 setup do
@@ -81,7 +78,6 @@ class TestLibby < Test::Unit::TestCase
                   assert_equal "jquery/ui/#{@lib.version}/ui/minified/jquery.effects.core.min.js", files_to_include[1]
                   assert_equal "jquery/ui/#{@lib.version}/ui/minified/jquery.effects.explode.min.js", files_to_include[2]
                 end
-                should_reference_files_that_exist "@lib.include"
                 context "and is not minified" do
                   setup do
                     @lib = Libby::JqueryUi.new( :minified => false, :components => [ ['effects', ['blind']] ])
@@ -93,7 +89,6 @@ class TestLibby < Test::Unit::TestCase
                     assert_equal "jquery/ui/#{@lib.version}/ui/jquery.effects.core.js", files_to_include[1]
                     assert_equal "jquery/ui/#{@lib.version}/ui/jquery.effects.blind.js", files_to_include[2]
                   end
-                  should_reference_files_that_exist "@lib.include"
                 end
               end
               context "alternate core" do
@@ -154,7 +149,6 @@ class TestLibby < Test::Unit::TestCase
             assert_equal "extjs/ext-#{@lib.version}/adapter/ext/ext-base.js", files_to_include[0]
             assert_equal "extjs/ext-#{@lib.version}/ext-core.js", files_to_include[1]
           end
-          should_reference_files_that_exist "@lib.include"
           context "with" do
             context "all components" do
               setup do
@@ -164,7 +158,6 @@ class TestLibby < Test::Unit::TestCase
                 files_to_include = @lib.include
                 assert_equal "extjs/ext-#{@lib.version}/ext-all.js", files_to_include[1]
               end
-              should_reference_files_that_exist "@lib.include"
               context "in debug mode" do
                 setup do
                   @lib = Libby::ExtJs.new :components => :all_debug
@@ -173,7 +166,6 @@ class TestLibby < Test::Unit::TestCase
                   files_to_include = @lib.include
                   assert_equal "extjs/ext-#{@lib.version.to_s}/ext-all-debug.js", files_to_include[1]
                 end
-                should_reference_files_that_exist "@lib.include"
               end
             end
             context "core components" do
@@ -184,7 +176,6 @@ class TestLibby < Test::Unit::TestCase
                 files_to_include = @lib.include
                 assert_equal "extjs/ext-#{@lib.version.to_s}/ext-core.js", files_to_include[1]
               end
-              should_reference_files_that_exist "@lib.include"
               context "in debug mode" do
                 setup do
                   @lib = Libby::ExtJs.new :components => :core_debug
@@ -193,7 +184,6 @@ class TestLibby < Test::Unit::TestCase
                   files_to_include = @lib.include
                   assert_equal "extjs/ext-#{@lib.version.to_s}/ext-core-debug.js", files_to_include[1]
                 end
-                should_reference_files_that_exist "@lib.include"
               end
             end
             context "extra components" do
@@ -210,7 +200,6 @@ class TestLibby < Test::Unit::TestCase
                 assert_equal "extjs/ext-#{@lib.version.to_s}/build/util/KeyMap-min.js", files_to_include[4]
                 assert_equal "extjs/ext-#{@lib.version.to_s}/build/data/Store-min.js", files_to_include[5]
               end
-              should_reference_files_that_exist "@lib.include"
               context "that are un-minified" do
                 setup do
                   @lib.minified = false
@@ -221,7 +210,6 @@ class TestLibby < Test::Unit::TestCase
                   assert_equal "extjs/ext-#{@lib.version.to_s}/ext-core.js", files_to_include[1]
                   assert_equal "extjs/ext-#{@lib.version.to_s}/source/data/Store.js", files_to_include[5]
                 end
-                should_reference_files_that_exist "@lib.include"
               end
             end
             context "the adapter for" do
@@ -233,7 +221,6 @@ class TestLibby < Test::Unit::TestCase
                   files_to_include = @lib.include
                   assert_equal "extjs/ext-#{@lib.version.to_s}/adapter/jquery/ext-jquery-adapter.js", files_to_include[0]
                 end
-                should_reference_files_that_exist "@lib.include"
               end
               context "Prototype" do
                 setup do
@@ -243,7 +230,6 @@ class TestLibby < Test::Unit::TestCase
                   files_to_include = @lib.include
                   assert_equal "extjs/ext-#{@lib.version.to_s}/adapter/prototype/ext-prototype-adapter.js", files_to_include[0]
                 end
-                should_reference_files_that_exist "@lib.include"
               end
               context "Y!UI" do
                 setup do
@@ -253,7 +239,6 @@ class TestLibby < Test::Unit::TestCase
                   files_to_include = @lib.include
                   assert_equal "extjs/ext-#{@lib.version.to_s}/adapter/yui/ext-yui-adapter.js", files_to_include[0]
                 end
-                should_reference_files_that_exist "@lib.include"
               end
             end
           end

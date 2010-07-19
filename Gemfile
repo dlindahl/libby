@@ -1,3 +1,7 @@
 source :rubygems
 
-gem "versionomy", ">= 0.4.0"
+gem "versionomy"
+group :test do
+  gem "shoulda"
+  gem "redgreen"
+end

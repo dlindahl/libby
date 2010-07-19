@@ -9,6 +9,7 @@ class Libby::ExtJs < Libby::JavascriptLibrary
   MINIFIED_SUFFIX = 'min'.freeze
   DEFAULT_CORE_CLASS = 'ExtJs::Cores::ExtJsCore'.freeze
   STANDARD_COMPONENTS = [ 'all', 'all_debug', 'core', 'core_debug'].freeze
+  # Deprecate load order since it changes too often
   LOAD_ORDER = {
     :core => ['Ext', 'DomHelper', 'Template', 'DomQuery', 'util/Observable', 'EventManager', 'Element', 'Fx', 'CompositeElement', 'data/Connection', 'UpdateManager', 'util/DelayedTask', '']
   }
