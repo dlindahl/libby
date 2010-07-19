@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new("> 1.3.1") if s.respond_to? :required_rubygems_version=
   s.authors = ["Derek Lindahl"]
-  s.date = %q{2010-06-30}
+  s.date = %q{2010-07-19}
   s.description = %q{Libby provides an easy way to include the most popular Javascript Libraries in your layouts or views.}
   s.email = %q{dlindahl@customink.com}
   s.extra_rdoc_files = [
