@@ -5,8 +5,8 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "libby"
-    gem.summary = %Q{Libby provides an easy way to include the most popular Javascript Libraries in your layouts or views.}
-    gem.description = %Q{Libby provides an easy way to include the most popular Javascript Libraries in your layouts or views.}
+    gem.summary = %Q{Libby includes Javascript Libraries in your view in just one line.}
+    gem.description = %Q{Libby provides an easy way to include the most popular Javascript Libraries in your layouts or views using just one line of code.}
     gem.email = "dlindahl@customink.com"
     gem.homepage = "http://github.com/dlindahl/libby"
     gem.authors = ["Derek Lindahl"]
