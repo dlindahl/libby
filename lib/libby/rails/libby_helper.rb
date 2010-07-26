@@ -38,6 +38,8 @@ module Libby::Rails::LibbyHelper
     if match = /^include_(\w+)/.match(method_id.to_s)
       library_name = match.captures.first
       include_js_library library_name, *args
+    else
+      super
     end
   end
 
