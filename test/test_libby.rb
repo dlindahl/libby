@@ -1,5 +1,4 @@
 require File.dirname(__FILE__) + '/helper'
-require 'shoulda_macros/libby_macros' # Shoulda Macros are not being automatically loaded for some reason...
 
 class TestLibby < Test::Unit::TestCase
 
