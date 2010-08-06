@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{libby}
-  s.version = "0.0.5"
+  s.version = "0.0.6"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Derek Lindahl"]
-  s.date = %q{2010-07-26}
+  s.date = %q{2010-08-06}
   s.description = %q{Libby provides an easy way to include the most popular Javascript Libraries in your layouts or views using just one line of code.}
   s.email = %q{dlindahl@customink.com}
   s.extra_rdoc_files = [
@@ -39,6 +39,7 @@ Gem::Specification.new do |s|
      "lib/libby/supported_libraries/ext_js.rb",
      "lib/libby/supported_libraries/jquery.rb",
      "lib/libby/supported_libraries/jquery_ui.rb",
+     "lib/libby/supported_libraries/require_js.rb",
      "lib/tasks/libby.rake",
      "lib/tasks/libby.rb",
      "libby.gemspec",

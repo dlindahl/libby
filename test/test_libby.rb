@@ -244,6 +244,30 @@ class TestLibby < Test::Unit::TestCase
         end
       end
     end
+    context "RequireJS" do
+      context "version" do
+        context Libby::RequireJs::MAX_VERSION.to_s do
+          context "(unminified)" do
+            setup do
+              @lib = Libby::RequireJs.new :minified => false
+            end
+            should "include the library" do
+              files_to_include = @lib.include
+              assert_equal "/javascripts/require.js", files_to_include
+            end
+          end
+          context "(minified)" do
+            setup do
+              @lib = Libby::RequireJs.new
+            end
+            should "include the library" do
+              files_to_include = @lib.include
+              assert_equal "/javascripts/require.min.js", files_to_include
+            end
+          end
+        end
+      end
+    end
   end
 
 end

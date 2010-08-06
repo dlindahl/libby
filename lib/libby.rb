@@ -9,9 +9,9 @@ require File.dirname(__FILE__) +  '/libby/mixins/minifiable_library'
 require File.dirname(__FILE__) +  '/libby/mixins/packable_library'
 
 require File.dirname(__FILE__) +  '/libby/base/javascript_library'
-require File.dirname(__FILE__) +  '/libby/supported_libraries/ext_js'
-require File.dirname(__FILE__) +  '/libby/supported_libraries/jquery'
-require File.dirname(__FILE__) +  '/libby/supported_libraries/jquery_ui'
+Dir["#{File.dirname(__FILE__)}/libby/supported_libraries/*.rb"].sort.each do |path|
+  require path
+end
 
 # Patch in to ActionView here?
 require File.dirname(__FILE__) +  '/libby/rails/libby_helper'
