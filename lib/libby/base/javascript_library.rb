@@ -47,7 +47,7 @@ class Libby::JavascriptLibrary
 
   def production_env?
     @envs ||= ['production', 'staging', 'test']
-    @envs.include?( defined?(::Rails) ) ? ::Rails.env : 'test'
+    @envs.include?( ::Rails.env.to_s )
   end
 
   def apply_suffix( delimiter = '', abbreviated = true )

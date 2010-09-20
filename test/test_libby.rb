@@ -8,7 +8,7 @@ class TestLibby < Test::Unit::TestCase
         context Libby::Jquery::MAX_VERSION.to_s do
           setup do
             @lib_version = Libby::Jquery::MAX_VERSION.to_s
-            @lib = Libby::Jquery.new( Libby::Jquery::MAX_VERSION )
+            @lib = Libby::Jquery.new
           end
           should "include the library" do
             assert_equal "jquery/core/#{@lib_version}/jquery-#{@lib_version}.min.js", @lib.include
@@ -31,7 +31,9 @@ class TestLibby < Test::Unit::TestCase
             end
             should "include the library" do
               files_to_include = @lib.include
-              assert_equal ["jquery/ui/#{@lib.version.to_s}/jquery-#{@core_version}.js"], files_to_include
+
+              assert_equal "jquery/ui/#{@lib.version.to_s}/jquery-#{@core_version}.js", files_to_include[0]
+              assert_equal "jquery/ui/#{@lib.version.to_s}/ui/minified/jquery-ui.min.js", files_to_include[1]
             end
             context "with specified" do
               context "components" do
@@ -145,72 +147,78 @@ class TestLibby < Test::Unit::TestCase
           end
           should "include the library" do
             files_to_include = @lib.include
+
             assert_equal "extjs/ext-#{@lib.version}/adapter/ext/ext-base.js", files_to_include[0]
-            assert_equal "extjs/ext-#{@lib.version}/ext-core.js", files_to_include[1]
+            assert_equal "extjs/ext-#{@lib.version}/ext-all.js", files_to_include[1]
+          end
+          context "(debug version)" do
+            setup do
+              @lib = Libby::ExtJs.new( :debug => true )
+            end
+            should "include the library" do
+              files_to_include = @lib.include
+
+              assert_equal "extjs/ext-#{@lib.version}/adapter/ext/ext-base-debug.js", files_to_include[0]
+              assert_equal "extjs/ext-#{@lib.version}/ext-all-debug.js", files_to_include[1]
+            end
           end
           context "with" do
-            context "all components" do
-              setup do
-                @lib = Libby::ExtJs.new :components => :all
-              end
-              should "include the library" do
-                files_to_include = @lib.include
-                assert_equal "extjs/ext-#{@lib.version}/ext-all.js", files_to_include[1]
-              end
-              context "in debug mode" do
+            context "extra packages" do
+            context "specified by" do
+              context "full path" do
                 setup do
-                  @lib = Libby::ExtJs.new :components => :all_debug
+                  @lib = Libby::ExtJs.new :packages => [ "pkgs/ext-dd.js" ]
                 end
                 should "include the library" do
                   files_to_include = @lib.include
-                  assert_equal "extjs/ext-#{@lib.version.to_s}/ext-all-debug.js", files_to_include[1]
+
+                  assert_equal "extjs/ext-#{@lib.version.to_s}/adapter/ext/ext-base.js", files_to_include[0]
+                  assert_equal "extjs/ext-#{@lib.version.to_s}/pkgs/ext-foundation.js", files_to_include[1]
+                  assert_equal "extjs/ext-#{@lib.version.to_s}/pkgs/ext-dd.js", files_to_include[2]
                 end
               end
-            end
-            context "core components" do
-              setup do
-                @lib = Libby::ExtJs.new
-              end
-              should "include the library" do
-                files_to_include = @lib.include
-                assert_equal "extjs/ext-#{@lib.version.to_s}/ext-core.js", files_to_include[1]
-              end
-              context "in debug mode" do
+              context "partial path" do
                 setup do
-                  @lib = Libby::ExtJs.new :components => :core_debug
+                  @lib = Libby::ExtJs.new :packages => [ "ext-dd" ]
                 end
                 should "include the library" do
                   files_to_include = @lib.include
-                  assert_equal "extjs/ext-#{@lib.version.to_s}/ext-core-debug.js", files_to_include[1]
+
+                  assert_equal "extjs/ext-#{@lib.version.to_s}/adapter/ext/ext-base.js", files_to_include[0]
+                  assert_equal "extjs/ext-#{@lib.version.to_s}/pkgs/ext-foundation.js", files_to_include[1]
+                  assert_equal "extjs/ext-#{@lib.version.to_s}/pkgs/ext-dd.js", files_to_include[2]
+                end
+              end
+              context "name" do
+                setup do
+                  @lib = Libby::ExtJs.new :packages => [ "Drag Drop" ]
+                end
+                should "include the library" do
+                  files_to_include = @lib.include
+
+                  assert_equal "extjs/ext-#{@lib.version.to_s}/adapter/ext/ext-base.js", files_to_include[0]
+                  assert_equal "extjs/ext-#{@lib.version.to_s}/pkgs/ext-foundation.js", files_to_include[1]
+                  assert_equal "extjs/ext-#{@lib.version.to_s}/pkgs/ext-dd.js", files_to_include[2]
                 end
               end
             end
-            context "extra components" do
+            context "that have lots of dependencies" do
               setup do
-                @lib = Libby::ExtJs.new :components => [ ['util', ['XTemplate', 'TextMetrics', 'KeyMap']], ['data', ['Store']] ]
+                @lib = Libby::ExtJs.new :packages => [ "Grid - GroupingView" ]
               end
               should "include the library" do
                 files_to_include = @lib.include
 
                 assert_equal "extjs/ext-#{@lib.version.to_s}/adapter/ext/ext-base.js", files_to_include[0]
-                assert_equal "extjs/ext-#{@lib.version.to_s}/ext-core.js", files_to_include[1]
-                assert_equal "extjs/ext-#{@lib.version.to_s}/build/util/XTemplate-min.js", files_to_include[2]
-                assert_equal "extjs/ext-#{@lib.version.to_s}/build/util/TextMetrics-min.js", files_to_include[3]
-                assert_equal "extjs/ext-#{@lib.version.to_s}/build/util/KeyMap-min.js", files_to_include[4]
-                assert_equal "extjs/ext-#{@lib.version.to_s}/build/data/Store-min.js", files_to_include[5]
-              end
-              context "that are un-minified" do
-                setup do
-                  @lib.minified = false
-                end
-                should "include the library" do
-                  files_to_include = @lib.include
-
-                  assert_equal "extjs/ext-#{@lib.version.to_s}/ext-core.js", files_to_include[1]
-                  assert_equal "extjs/ext-#{@lib.version.to_s}/source/data/Store.js", files_to_include[5]
-                end
+                assert_equal "extjs/ext-#{@lib.version.to_s}/pkgs/ext-foundation.js", files_to_include[1]
+                assert_equal "extjs/ext-#{@lib.version.to_s}/pkgs/cmp-foundation.js", files_to_include[2]
+                assert_equal "extjs/ext-#{@lib.version.to_s}/pkgs/pkg-grid-foundation.js", files_to_include[3]
+                assert_equal "extjs/ext-#{@lib.version.to_s}/pkgs/data-foundation.js", files_to_include[4]
+                assert_equal "extjs/ext-#{@lib.version.to_s}/pkgs/data-grouping.js", files_to_include[5]
+                assert_equal "extjs/ext-#{@lib.version.to_s}/pkgs/pkg-grid-grouping.js", files_to_include[6]
               end
             end
+          end
             context "the adapter for" do
               context "jQuery" do
                 setup do
@@ -219,6 +227,15 @@ class TestLibby < Test::Unit::TestCase
                 should "include the adapter" do
                   files_to_include = @lib.include
                   assert_equal "extjs/ext-#{@lib.version.to_s}/adapter/jquery/ext-jquery-adapter.js", files_to_include[0]
+                end
+                context "(debug)" do
+                  setup do
+                    @lib = Libby::ExtJs.new :core => :jquery, :debug => true
+                  end
+                  should "include the adapter" do
+                    files_to_include = @lib.include
+                    assert_equal "extjs/ext-#{@lib.version.to_s}/adapter/jquery/ext-jquery-adapter-debug.js", files_to_include[0]
+                  end
                 end
               end
               context "Prototype" do
@@ -239,6 +256,13 @@ class TestLibby < Test::Unit::TestCase
                   assert_equal "extjs/ext-#{@lib.version.to_s}/adapter/yui/ext-yui-adapter.js", files_to_include[0]
                 end
               end
+            end
+          end
+        end
+        context Libby::ExtJs::MAX_VERSION.bump(:major) do
+          should "raise an error because it is supported" do
+            assert_raise RuntimeError do
+              Libby::ExtJs.new( Libby::ExtJs::MAX_VERSION.bump(:major) )
             end
           end
         end
@@ -263,6 +287,13 @@ class TestLibby < Test::Unit::TestCase
             should "include the library" do
               files_to_include = @lib.include
               assert_equal "/javascripts/require.min.js", files_to_include
+            end
+          end
+        end
+        context Libby::RequireJs::MAX_VERSION.bump(:major) do
+          should "raise an error because it is supported" do
+            assert_raise RuntimeError do
+              Libby::RequireJs.new( Libby::RequireJs::MAX_VERSION.bump(:major) )
             end
           end
         end

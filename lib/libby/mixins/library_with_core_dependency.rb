@@ -1,8 +1,7 @@
 # A Mixin to add additional functions to assist a Library that requires a core library to fully operate.
 module Libby::Mixins::LibraryWithCoreDependency
   def initialize( *args )
-    super
-    options = args.last.is_a?(Hash) ? args.pop : {} # TODO: Change this to args.extract_options! when upgraded to Rails 2
+    options = args.extract_options!
     @core_config ||= {}
 
     if options[:core]
@@ -10,6 +9,8 @@ module Libby::Mixins::LibraryWithCoreDependency
       @core_config = options[:core]
     end
     build_core
+    args.push options
+    super *args
   end
 
   def include_core

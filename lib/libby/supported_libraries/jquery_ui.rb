@@ -23,6 +23,9 @@ class Libby::JqueryUi < Libby::Jquery
       options[:core] = { :minified => false } if self.class::CORE_VERSIONS[version.to_s]
     end
 
+    # By default, load all of the UI components
+    options[:components] ||= 'all'
+
     # Put the options back so that "super" can use them
     args.push options
     super( *args )

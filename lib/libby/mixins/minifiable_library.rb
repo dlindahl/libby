@@ -9,9 +9,10 @@ module Libby::Mixins::MinifiableLibrary
   end
 
   def initialize( *args )
-    super
-    options = args.last.is_a?(Hash) ? args.pop : {} # TODO: Change this to args.extract_options! when upgraded to Rails 2
+    options = args.extract_options!
     self.minified = options[:minified].to_s.to_b unless options[:minified].nil?
+    args.push options
+    super
   end
 
   def minifiable?
@@ -28,7 +29,7 @@ module Libby::Mixins::MinifiableLibrary
 
   def minified
     is_packed = self.respond_to?(:packable?) ? packed? : false # Don't minify if packing is supported and turned on
-    (@minified.nil? ? (production_env? and !is_packed) : @minified) if minifiable?
+    (@minified.nil? ? (production_env? and not is_packed) : @minified) if minifiable?
   end
   alias :minified? :minified
 

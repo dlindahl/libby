@@ -31,13 +31,39 @@ Every library has a few common options that can be passed on include as well as 
 
 ==== All Libraries
 
+All versions of each library will pull in the un-minified and/or debug versions of their respective libraries while in development mode. In any other environment (production, test, etc.), the debug or minified version will automatically be included. You disable this by specifying:
+
+  Libby::[YourLibrary].new :debug => true
+  Libby::[YourLibrary].new :minified => true
+
+Whichever is most appropriate for your situation.
+
 ===== Specific Versions
 
-TODO
+By default, Libby will include the maximum version it supports of the library specified.
+
+To include a specific version of a library, use the "version" configuration option, and pass it a Number or String that Versiononmy can parse:
+
+  Libby::Jquery.new( :version => '1.3.2' )
+  Libby::ExtJs.new( :version => '3.0.0-rc2' )
+
+Note: Because some libraries changes their file structures and naming conventions between versions, this may not work for older version of certain libraries
 
 ===== Minification
 
-TODO
+To include the minified version of a library, use the "minified" configuration option, and pass it a Boolean value.
+
+  Libby::Jquery( :minifned => true )
+
+Note: Unless told otherwise, Libby will automatically include the minified version in non-development environments. Also note that this option is only available for libraries that provide minified versions of their library.
+
+===== Debug Versions
+
+To include the debug version of a library, use the "debug" configuration option, and pass it a Boolean value.
+
+  Libby::Jquery( :debug => true )
+
+Note: Unless told otherwise, Libby will automatically include the debug version in non-development environments. Also note that this option is only available for libraries that provide minified versions of their library.
 
 ===== CDN
 
@@ -45,19 +71,81 @@ TODO
 
 ==== jQuery UI
 
-TODO
+To include jQuery UI, include the following commands in your view:
+
+  <%= include_jquery_ui %>
+
+By default, Libby will include the entire jQuery UI suite.
 
 ===== Components
 
-TODO
+To reduce page load times, you can specify specific components of jQuery UI by using the following configuation:
 
-==== ExtJs
+  <%= include_jquery_ui :components => [ ['ui', ['accordion']] ] %>
+
+The "components" parameter takes an Array of arrays where the first item is the jQuery UI group ("ui" or "effects") and the 2nd item is an Array of features ("bounce", "autocomplete", etc.)
+
+To include both effects and UI widgets:
+
+  <%= include_jquery_ui :components => [ ['ui', ['accordion','progressbar']], ['effects', ['blind','bounce']] ] %>
+
+There is no need to specify either "jquery.effects.core", "jquery.ui.core", or "jquery.ui.widget", these files are included automatically as needed.
 
 ===== Cores
 
-TODO
+By default, jQuery UI uses whichever version of jQuery is included in its package. If you want to specify a different version of jQuery to use with jQuery UI, use the following configuration parameter:
 
-===== Components
+  <%= include_jquery_ui :core => { :version => '1.3.2', :base_path => 'path_to_your/jquery' } %>
+
+Since you are overriding what jQuery UI wants you to do, do this at your own risk!
+
+==== Ext JS
+
+To include Ext JS, include the following commands in your view:
+
+  <%= include_ext_js %>
+
+By default, Libby will include the entire Ext JS suite.
+
+===== Cores
+
+Ext JS allows you to use several different libraries underneath Ext JS. By default, Libby will include the base Ext JS library. If you would like to use a different library that Ext JS supports, use the following configuration paramter:
+
+  <%= include_ext_js :core => :jquery %>
+
+or
+
+  <%= include_ext_js :core => :yui %>
+
+or
+
+  <%= include_ext_js :core => :prototype %>
+
+Note: This only includes the provided Ext JS adapter for the library! You must specifically include the library core yourself:
+
+  <%= include_jquery %>
+
+At the time of this writing, YUI and Prototype are not supported by Libby.
+
+===== Packages
+
+To reduce page load times, you can specify specific packages of Ext JS by using the following configuation paramter:
+
+  <%= include_ext_js :packages => [ 'ext-dd' ] %>
+  <%= include_ext_js :packages => [ 'pkg/ext-dd.js' ] %>
+  <%= include_ext_js :packages => [ 'Drag Drop' ] %>
+
+Package dependencies are handled for you, so you really just need to specify the end points. Libby uses Ext JS's "ext.jsb2" build file to determine package names and file dependencies. Please refer to that file to figure out the official Ext JS name of each package.
+
+====== Alternate Package Payloads
+
+If you happen to have a custom Ext JS build file, Libby can use that to determine package names and file dependencies:
+
+  <%= include_ext_js :package_payload => "/full/public/path/to/your/payload.foo" %>
+
+This could be useful if you have lots of custom components or widgets.
+
+==== Require JS
 
 TODO
 
@@ -71,11 +159,20 @@ Libby includes several Rake tasks that allow you to quickly download any of Libb
 
   rake libby:install:jquery_ui
 
+  rake libby:install:require_js
+
 Or, if you need everything:
 
   rake libby:install:all
 
 These Rake tasks will download the libraries from their respective hosts and install them in a location that Libby expects them to live (which can be configured by changing Libby.root)
+
+=== TODO
+
+  * Add support for Ext Core
+  * Add support for CDNs.
+  * Enable ExtJs to auto-include the correct adapter if Libby was used to include jQuery.
+  * Add support for older versions of libraries (going forward)
 
 == Note on Patches/Pull Requests
  

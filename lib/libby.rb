@@ -3,10 +3,9 @@ require 'versionomy'
 
 require File.dirname(__FILE__) + '/libby/libby'
 
-require File.dirname(__FILE__) +  '/libby/mixins/library_with_components'
-require File.dirname(__FILE__) +  '/libby/mixins/library_with_core_dependency'
-require File.dirname(__FILE__) +  '/libby/mixins/minifiable_library'
-require File.dirname(__FILE__) +  '/libby/mixins/packable_library'
+Dir["#{File.dirname(__FILE__)}/libby/mixins/*.rb"].sort.each do |path|
+  require path
+end
 
 require File.dirname(__FILE__) +  '/libby/base/javascript_library'
 Dir["#{File.dirname(__FILE__)}/libby/supported_libraries/*.rb"].sort.each do |path|

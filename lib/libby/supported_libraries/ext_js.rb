@@ -1,33 +1,35 @@
 class Libby::ExtJs < Libby::JavascriptLibrary
   include Libby::Mixins::LibraryWithCoreDependency
-  include Libby::Mixins::LibraryWithComponents
-  include Libby::Mixins::MinifiableLibrary
+  include Libby::Mixins::LibraryWithPackages
+  include Libby::Mixins::DebuggableLibrary
 
   NAME = 'ExtJS'.freeze
   MAX_VERSION = Versionomy.parse('3.2.1').freeze
   BASE_PATH = 'extjs'.freeze
   MINIFIED_SUFFIX = 'min'.freeze
-  DEFAULT_CORE_CLASS = 'ExtJs::Cores::ExtJsCore'.freeze
-  STANDARD_COMPONENTS = [ 'all', 'all_debug', 'core', 'core_debug'].freeze
-  # Deprecate load order since it changes too often
-  LOAD_ORDER = {
-    :core => ['Ext', 'DomHelper', 'Template', 'DomQuery', 'util/Observable', 'EventManager', 'Element', 'Fx', 'CompositeElement', 'data/Connection', 'UpdateManager', 'util/DelayedTask', '']
-  }
+  DEFAULT_CORE_CLASS = 'ExtJs::Cores::ExtJsBaseCore'.freeze
+  PACKAGE_FILE_PATH = 'ext.jsb2'
 
-  minifiable true
+  debuggable true
 
   def initialize( *args )
-    options = args.last.is_a?(Hash) ? args.pop : {} # TODO: Change this to args.extract_options! when upgraded to Rails 2
+    options = args.extract_options!
+    options[:packages] ||= []
+    options[:packages] = [ options[:packages] ] unless options[:packages].is_a? Array
+    # Auto-include Ext All if no packages are specified
+    if options[:packages].empty?
+      options[:packages] << 'Ext All'
+    end
+
+    # Re-map the Core specification to a Ruby Class (or set the default if missing)
     if options[:core]
       options[:core] = { :class => "ExtJs::Cores::#{options[:core].to_s.classify}Core" } unless options[:core].is_a? Hash
+    else
+      options[:packages].unshift('Ext Base')
     end
-    options[:components] ||= :core
-    # If the CORE files were not specified, automatically include them
-    if options[:components].is_a? Array and not options[:components].flatten.include? 'core'
-      options[:components] << ['core']
-    end
+
     args.push options
-    super( *args )
+    super *args
   end
 
   def public_path
@@ -38,41 +40,21 @@ class Libby::ExtJs < Libby::JavascriptLibrary
     @core.class::NAME
   end
 
-  def component_base_path( type = nil)
-    path = public_path
-    if type and not STANDARD_COMPONENTS.include? type
-      path << "/#{(minified?) ? 'build' : 'source'}"
-    end
-    path
+  def package_base_path( type = nil)
+    public_path
   end
 
-  def all_component_group
-    "ext-all"
-  end
-
-  def all_debug_component_group
-    "ext-all-debug"
-  end
-
-  def core_component_group
-    "ext-core"
-  end
-
-  def core_debug_component_group
-    "ext-core-debug"
-  end
-
-  def build_component_filename( type, component )
-    "#{type}/#{component}#{apply_suffix('-')}"
+  def package_payload
+    File.join(Rails.root, '/', Libby.root, '/', public_path, PACKAGE_FILE_PATH)
   end
 
   def include_adapter
-    # ExtJsCore does not require an adapter
-    @core.class.to_s == 'Libby::ExtJs::Cores::ExtJsCore' ? [] : "#{@core.path}/ext-#{@core.name}-adapter.js" 
+    # ExtJsBaseCore does not require an adapter
+    @core.class.to_s =~ %r{ExtJsBaseCore} ? nil : "#{@core.path}/ext-#{@core.name}-adapter#{apply_suffix('-')}.js"
   end
 
   def include
-    [include_core, include_adapter, include_components].flatten
+    [include_core, include_adapter, include_packages].flatten.compact.uniq
   end
 
   def self.download_params
@@ -107,11 +89,10 @@ module Libby::ExtJs::Cores
     end
   end
 
-  class ExtJsCore < Base
+  class ExtJsBaseCore < Base
     NAME = 'Ext'
 
     def include
-      "#{path}/ext-base.js"
     end
   end
 
