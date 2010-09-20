@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{libby}
-  s.version = "0.0.7"
+  s.version = "0.0.8"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Derek Lindahl"]
@@ -38,6 +38,7 @@ Gem::Specification.new do |s|
      "lib/libby/mixins/packable_library.rb",
      "lib/libby/rails/libby_controller.rb",
      "lib/libby/rails/libby_helper.rb",
+     "lib/libby/supported_libraries/ext_core.rb",
      "lib/libby/supported_libraries/ext_js.rb",
      "lib/libby/supported_libraries/jquery.rb",
      "lib/libby/supported_libraries/jquery_ui.rb",

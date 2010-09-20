@@ -145,6 +145,16 @@ If you happen to have a custom Ext JS build file, Libby can use that to determin
 
 This could be useful if you have lots of custom components or widgets.
 
+==== Ext Core
+
+To include Ext Core, include the following commands in your view:
+
+  <%= include_ext_core %>
+
+By default, Libby will include the debug version of the library in non-development environments.
+
+Ext Core doesn't have any other configuration options, so...
+
 ==== Require JS
 
 TODO

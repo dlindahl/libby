@@ -34,7 +34,7 @@ namespace :libby do
   namespace :install do
     desc "Install all support Javascript Libraries"
     task :all do
-      [:jquery, :jquery_ui, :ext_js].each do |lib|
+      [:jquery, :jquery_ui, :ext_js, :ext_core].each do |lib|
         Rake::Task["libby:install:#{lib}"].invoke
       end
     end
@@ -53,6 +53,11 @@ namespace :libby do
     task :ext_js do |ext|
       puts "NOTE: When unzipping the library, a warning to overwrite existing files may appear. It looksl like Sencha zipped the file incorrectly. It should be safe to accept [A]ll."
       download_library Libby::ExtJs
+    end
+
+    desc "Install the latest version of the Ext Core Javascript Library."
+    task :ext_core do |ext|
+      download_library Libby::ExtCore
     end
 
     desc "Install the latest version of the RequireJS Library"

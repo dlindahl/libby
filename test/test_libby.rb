@@ -267,6 +267,20 @@ class TestLibby < Test::Unit::TestCase
           end
         end
       end
+      context "Core" do
+        context "version" do
+          context Libby::ExtCore::MAX_VERSION.to_s do
+            setup do
+              @lib = Libby::ExtCore.new
+            end
+            should "include the library" do
+              files_to_include = @lib.include
+
+              assert_equal "extjs/core/ext-core-#{@lib.version}/ext-core.js", files_to_include
+            end
+          end
+        end
+      end
     end
     context "RequireJS" do
       context "version" do
@@ -300,5 +314,4 @@ class TestLibby < Test::Unit::TestCase
       end
     end
   end
-
 end
