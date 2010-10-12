@@ -20,3 +20,5 @@ pkg
 
 ## PROJECT::SPECIFIC
 .bundle
+.rvmrc*
+Gemfile.lock
