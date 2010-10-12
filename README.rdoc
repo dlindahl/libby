@@ -183,6 +183,7 @@ These Rake tasks will download the libraries from their respective hosts and ins
   * Add support for CDNs.
   * Enable ExtJs to auto-include the correct adapter if Libby was used to include jQuery.
   * Add support for older versions of libraries (going forward)
+  * Add tests for LibbyHelper (the :force_include option in particular)
 
 == Note on Patches/Pull Requests
  
