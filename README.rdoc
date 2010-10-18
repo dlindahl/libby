@@ -99,6 +99,10 @@ By default, jQuery UI uses whichever version of jQuery is included in its packag
 
 Since you are overriding what jQuery UI wants you to do, do this at your own risk!
 
+If your view/layout has already included jQuery, use the following configuration setup to not include the core dependency:
+
+  <%= include_jquery_ui :core => false %>
+
 ==== Ext JS
 
 To include Ext JS, include the following commands in your view:

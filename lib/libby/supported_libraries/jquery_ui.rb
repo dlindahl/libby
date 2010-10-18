@@ -18,7 +18,7 @@ class Libby::JqueryUi < Libby::Jquery
   def initialize( *args )
     options = args.extract_options!
 
-    unless options[:core]
+    unless options[:core] or options[:core] == false
       # By default, the jQuery UI Core Library (jQuery) does not support the minification
       options[:core] = { :minified => false } if self.class::CORE_VERSIONS[version.to_s]
     end
@@ -50,7 +50,7 @@ class Libby::JqueryUi < Libby::Jquery
   end
 
   def include
-    [include_core, include_components].flatten
+    [include_core, include_components].flatten.compact
   end
 
   def self.download_params

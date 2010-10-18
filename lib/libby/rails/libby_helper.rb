@@ -23,6 +23,8 @@ module Libby::Rails::LibbyHelper
 
     force_include = options.delete(:force_include) if options.has_key? :force_include
 
+    args << options
+
     lib = compose_library( library_name, *args )
 
     # If the library exists and has not already been included, include it. This helps prevents views from including a library more than one time on a page.
@@ -50,11 +52,15 @@ module Libby::Rails::LibbyHelper
   def add_included_library( lib )
     @included_libraries ||= {}
 
-    @included_libraries[lib.name] ||= []
-    @included_libraries[lib.name] << lib.version
+    if lib
+      @included_libraries[lib.name] ||= []
+      @included_libraries[lib.name] << lib.version
 
-    # If the library contains a core dependency, make sure that is included as well
-    add_included_library( lib.core ) if lib.respond_to? :core
+      # If the library contains a core dependency, make sure that is included as well
+      add_included_library( lib.core ) if lib.respond_to? :core
+    else
+      logger.warn("WARNING: A view has attempted to include a nil library!")
+    end
   end
 
 end

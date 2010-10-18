@@ -60,7 +60,7 @@ class TestLibby < Test::Unit::TestCase
                   assert_equal "jquery/ui/#{@lib.version}/ui/minified/jquery-ui.min.js", files_to_include[1]
                 end
               end
-              context "duplicate core" do
+              context "duplicate component core" do
                 setup do
                   @lib = Libby::JqueryUi.new( :components => [ ['ui', ['core', 'accordion']] ])
                 end
@@ -100,6 +100,14 @@ class TestLibby < Test::Unit::TestCase
                 end
                 should "include the library" do
                   assert_equal "#{@alt_path}/#{@alt_version}/jquery-#{@alt_version}.min.js", @lib.include[0]
+                end
+              end
+              context "undefined core" do
+                setup do
+                  @lib = Libby::JqueryUi.new :core => false
+                end
+                should "include the library" do
+                  assert_no_match Regexp.new("jquery-([0-9.])+\.js"), @lib.include[0]
                 end
               end
             end
