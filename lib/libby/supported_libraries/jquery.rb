@@ -2,7 +2,7 @@ class Libby::Jquery < Libby::JavascriptLibrary
   include Libby::Mixins::MinifiableLibrary
 
   NAME = 'jQuery'.freeze
-  MAX_VERSION = Versionomy.parse('1.4.2').freeze
+  MAX_VERSION = Versionomy.parse('1.4.4').freeze
   BASE_PATH = 'jquery/core'.freeze
   MINIFIED_SUFFIX = 'min'.freeze
 
